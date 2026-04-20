@@ -113,10 +113,21 @@ def save_model(model, feature_columns):
 
     print("Model and feature columns saved successfully")
 
+#Save Location Mapping
+def save_location_mapping(df):
+    """
+    Save location average price mapping for inference.
+    """
+    location_mapping = df.groupby("location")["location_avg_price"].first().to_dict()
+    joblib.dump(location_mapping, "models/location_avg_price.pkl")
+
 #Full training pipeline
 def train_pipeline(file_path):
     print("Loading and preprocessing data.....")
     df = preprocess_data(file_path)
+
+    print("Save location mapping")
+    save_location_mapping(df)
 
     print("Preparing features.....")
     X, y = prepare_features(df)

@@ -130,6 +130,17 @@ def add_engineered_per_sqft_outliers(df: pd.DataFrame)-> pd.DataFrame:
     df["sqft_per_bedroom"] = df["total_sqft"] / df["bedroom"]
     return df
 
+#Add location average price
+def add_location_avg_price(df: pd.DataFrame)-> pd.DataFrame:
+    """
+    Add average price per sqft for each location.
+    This creates a strong location signal.
+    """
+    location_avg = df.groupby("location") ["price_per_sqft"].mean()
+    df["location_avg_price"] = df["location"].map(location_avg)
+
+    return df
+
 #Final cleanup
 def final_cleanup(df: pd.DataFrame)-> pd.DataFrame:
     """
@@ -154,6 +165,7 @@ def preprocess_data(file_path: str)-> pd.DataFrame:
     df = remove_bath_outliers(df)
     df = add_price_per_sqft(df)
     df = remove_price_per_sqft_outliers(df)
+    df = add_location_avg_price(df)
     #df = add_engineered_per_sqft_outliers(df)
     df = final_cleanup(df)
     return df
