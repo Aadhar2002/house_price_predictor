@@ -1,7 +1,6 @@
 #Import libraries
 import joblib
 import pandas as pd
-import numpy as np
 
 #Load artifacts
 def load_artifacts():
@@ -18,6 +17,7 @@ def prepare_input(location, total_sqft, bath, bedroom, feature_columns):
     Prepare one row of model input using the saved training columns.
     """
     input_data = {col: 0 for col in feature_columns}
+
     if "total_sqft" in input_data:
         input_data["total_sqft"] = total_sqft
 
@@ -35,6 +35,15 @@ def prepare_input(location, total_sqft, bath, bedroom, feature_columns):
         input_data[location_column] = 1
 
     input_df = pd.DataFrame([input_data])
+
+    print("Selected location:", location)
+    print("Expected column:", location_column)
+    print("Column exists:", location_column in input_data)
+
+    active_location_cols = [k for k, v in input_data.items() if k.startswith("location_") and v == 1]
+    print("Activated location columns:", active_location_cols)
+    print(input_df.head())
+
     return input_df
 
 #Predict Price

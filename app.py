@@ -16,7 +16,8 @@ def load_locations():
 
     for col in feature_columns:
         if col.startswith("location_"):
-            locations.append(col.replace("location_", ""))
+            clean_name = col.replace("location_", "", 1)
+            locations.append(clean_name)
 
     locations = sorted(locations)
     return locations

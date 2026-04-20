@@ -76,7 +76,7 @@ def clean_location(df: pd.DataFrame)-> pd.DataFrame:
     return df
 
 #Reduce location categories
-def reduce_location_categories(df: pd.DataFrame, min_count: int=25)-> pd.DataFrame:
+def reduce_location_categories(df: pd.DataFrame, min_count: int=10)-> pd.DataFrame:
     """
     Group rare locations into 'other'.
     """
@@ -149,12 +149,12 @@ def preprocess_data(file_path: str)-> pd.DataFrame:
     df = extract_bedroom(df)
     df = clean_total_sqft(df)
     df = clean_location(df)
-    df = reduce_location_categories(df, min_count=25)
+    df = reduce_location_categories(df, min_count=10)
     df = remove_sqft_outliers(df)
     df = remove_bath_outliers(df)
     df = add_price_per_sqft(df)
     df = remove_price_per_sqft_outliers(df)
-    df = add_engineered_per_sqft_outliers(df)
+    #df = add_engineered_per_sqft_outliers(df)
     df = final_cleanup(df)
     return df
 
