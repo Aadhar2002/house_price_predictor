@@ -112,7 +112,7 @@ During prediction:
 
 🚀 Live Demo
 
-Coming soon (Hugging Face Deployment in progress)
+Link: https://huggingface.co/spaces/Aadhar2002/House_Price_Predictor
 
 ---
 
