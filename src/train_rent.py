@@ -17,8 +17,15 @@ def load_data():
 def train_models(X_train, y_train):
     models = {
         "Linear Regression": LinearRegression(),
-        "Random Forest": RandomForestRegressor(n_estimators=100, random_state=42),
-        "Gradient Boosting": GradientBoostingRegressor(random_state=42)
+        "Random Forest": RandomForestRegressor(n_estimators=100,
+                                               max_depth=10,
+                                               min_samples_split=5,
+                                               min_samples_leaf=2,
+                                               random_state=42),
+        "Gradient Boosting": GradientBoostingRegressor(n_estimators=100,
+                                                       learning_rate=0.05,
+                                                       max_depth=3,
+                                                       random_state=42)
     }
 
     trained_models = {}

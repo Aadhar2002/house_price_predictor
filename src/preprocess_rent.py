@@ -25,11 +25,21 @@ def preprocess_rent_data(file_path: str, city_name: str = "Bangalore") -> pd.Dat
         "rent": "price"
     })
 
+    #Reduce location categories
+    def reduce_location_categories(df: pd.DataFrame, min_count: int = 10) -> pd.DataFrame:
+        location_counts = df["location"].value_counts()
+        rare_locations = location_counts[location_counts < min_count].index
+        df["location"] = df["location"].apply(lambda x: "other" if x in rare_locations else x)
+        return df
+
     #Keep only required columns
     df = df[["location", "sqft", "bath", "bhk", "price"]].copy()
 
     #Clean location
     df["location"] = df["location"].astype(str).str.strip().str.lower()
+
+    df["location"] = df["location"].astype(str).str.strip().str.lower()
+    df = reduce_location_categories(df, min_count=10)
 
     #Convert numeric
     df["sqft"] = pd.to_numeric(df["sqft"], errors="coerce")
